@@ -1,0 +1,54 @@
+name: Build Dev Debug APK ( No Signed APK )
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4.0.0
+
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4.1.1
+      - name: Flutter action
+        uses: subosito/flutter-action@v2.14.0
+        with:
+          flutter-version: "3.19.3"
+          channel: 'stable'
+          cache: true
+
+      - name: Create Development Config Json
+        uses: timheuer/base64-to-file@v1.2.4
+        with:
+          fileName: 'development.config.json'
+          fileDir: './development/'
+          encodedString: ${{ secrets.DEV_FILE }}
+
+      - run: flutter pub get
+
+      - name: Start Development Debug Build
+        run:
+          flutter build apk --flavor development -t lib/main_development.dart
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flutter_ci_cd.apk
+          path: build/app/outputs/flutter-apk/app-development-release.apk

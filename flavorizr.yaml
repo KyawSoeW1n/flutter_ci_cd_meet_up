@@ -1,0 +1,24 @@
+app:
+  android:
+    flavorDimensions: "flavor-type"
+
+flavors:
+  development:
+    app:
+      name: "Flutter CI Dev"
+
+    android:
+      applicationId: "com.flutter.testing.ci.cd.flutter_ci_cd.dev"
+    ios:
+      bundleId: "com.flutter.testing.ci.cd.flutter_ci_cd.dev"
+    macos:
+      bundleId: "com.flutter.testing.ci.cd.flutter_ci_cd.dev"
+  production:
+    app:
+      name: "Flutter CI"
+    android:
+      applicationId: "com.flutter.testing.ci.cd.flutter_ci_cd"
+    ios:
+      bundleId: "com.flutter.testing.ci.cd.flutter_ci_cd"
+    macos:
+      bundleId: "com.flutter.testing.ci.cd.flutter_ci_cd"
