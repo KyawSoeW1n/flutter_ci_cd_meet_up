@@ -2,9 +2,9 @@ name: Build Dev Debug APK ( No Signed APK )
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 defaults:
   run:
